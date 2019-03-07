@@ -8,4 +8,4 @@ universe.addToAnimation(function(){
 
 // enabling VR
 document.body.appendChild( WEBVR.createButton( universe.getRenderer() ) );
-//universe.getRenderer().vr.enabled = true;
+universe.getRenderer().vr.enabled = true;

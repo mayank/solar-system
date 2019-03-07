@@ -40,7 +40,7 @@ App.prototype.createScene = function(){
 
 App.prototype.createCamera = function(){
     var camera = new THREE.PerspectiveCamera( 105, window.innerWidth / window.innerHeight, 1, 5000 );
-    camera.position.set( 70, 70, 70 );
+    camera.position.set( 70, 70, -70 );
     camera.lookAt( 0, 0, 0 );
     return camera;
 }
