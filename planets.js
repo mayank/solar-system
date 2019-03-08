@@ -1,3 +1,13 @@
+/**
+ * its own access, orbit around a planet etc. 
+ * @constructor
+ * @param {App} app - App Context to access Scene, Camera and Animation Loop
+ * @param {String} name - Name of the Planet
+ * @param {Number} size - Size of the Planet
+ * @param {Number} rotation - Rotation Speed on its own Access
+ * @param {Number=} distance - Distance from Center of Orbit
+ * @param {Number=} speed - Speed of Orbiting
+ */
 function Planet( app, name, size, rotation, distance, speed ) {
     this.segments = 64;
 
@@ -19,6 +29,9 @@ function Planet( app, name, size, rotation, distance, speed ) {
     this.app.addToAnimation( this.animate, this );
 }
 
+/**
+ * Initializes the basics like scene, camera and renderer
+ */
 Planet.prototype.init = function(){
     var self = this;
     this.geometry = new THREE.SphereGeometry( this.size, this.segments, this.segments );
@@ -31,6 +44,9 @@ Planet.prototype.init = function(){
     this.setHoverProperty();
 }
 
+/**
+ * Enables hover over the planets, shows their names
+ */
 Planet.prototype.setHoverProperty = function(){
     var self = this;
 
@@ -47,18 +63,36 @@ Planet.prototype.setHoverProperty = function(){
     });
 }
 
+/**
+ * Enables/Disables shadow casting
+ * @param {Boolean} bool - true/false
+ */
 Planet.prototype.castShadow = function(bool) {
     this.mesh.castShadow = bool;
 }
 
+/**
+ * Enables/Disables shadow recieveing
+ * @param {Boolean} bool - true/false
+ */
 Planet.prototype.receiveShadow = function(bool) {
     this.mesh.receiveShadow = bool;
 }
 
+/**
+ * Sets different properties to the Planet
+ * @param {Object} properties - Key/Value Pairs of Material Properties
+ * @example
+ * sun.setMaterial({ emissiveMap: new THREE.Texture(), emissive: 0xf9d71c, emissiveIntensity: 1.3 });
+ */
 Planet.prototype.setMaterial = function ( properties ) {
     this.material.setValues( properties );
 }
 
+/**
+ * Sets the orbit of the current Planet to a different planet.
+ * @param {Planet} planet - Parent Planet Object
+ */
 Planet.prototype.orbitAround = function ( planet ) {
     this.setOrbit(0, 0);
     planet.getMesh().add( this.getMesh() );
@@ -77,6 +111,11 @@ Planet.prototype.getMesh = function(){
     return this.mesh;
 }
 
+/**
+ * Animation Loop Function for the Planet
+ * @param {Planet} self - Current Object of Planet
+ * @reutrns {Planet}
+ */
 Planet.prototype.animate = function( self ){
     if(self.speed) {
         var point = self.orbit.getPoint( self.start );

@@ -1,4 +1,6 @@
-// global app
+/**
+ * @global
+ */
 var universe = new App();
 var scene = universe.getScene();
 

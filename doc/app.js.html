@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>app.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="App.html">App</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="App.html#addToAnimation">addToAnimation</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="App.html#addToScene">addToScene</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="App.html#createCamera">createCamera</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="App.html#createRenderer">createRenderer</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="App.html#createScene">createScene</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="App.html#draw">draw</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="App.html#getCamera">getCamera</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="App.html#getRenderer">getRenderer</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="App.html#getScene">getScene</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="App.html#init">init</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Planet.html">Planet</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Planet.html#animate">animate</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Planet.html#castShadow">castShadow</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Planet.html#init">init</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Planet.html#orbitAround">orbitAround</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Planet.html#receiveShadow">receiveShadow</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Planet.html#setHoverProperty">setHoverProperty</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Planet.html#setMaterial">setMaterial</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#universe">universe</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">app.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Core Class to Render Canvas Web GL
+ * @constructor
+ * @author Mayank [mayank.mishra@proptiger.com]
+ */
+function App() {
+    this.init();
+}
+
+/**
+ * Initializes the basics like scene, camera and renderer
+ */
+App.prototype.init = function(){
+    this.scene = this.createScene();
+    this.camera = this.createCamera();
+    this.renderer = this.createRenderer();
+
+    new THREE.Interaction(this.renderer, this.scene, this.camera);
+
+    this.objects = [];
+}
+
+/**
+ * Create a new Web GL Renderer with shadow enabled
+ * @returns {THREE.Renderer} renderer - WebGL Renderer
+ */
+App.prototype.createRenderer = function(){
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setClearColor(0x000000);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    document.body.appendChild( renderer.domElement );
+    return renderer;
+}
+
+/**
+ * @returns {THREE.Scene} scene - three.js Scene object
+ * @deprecated since version 2.0
+ */
+App.prototype.getScene = function(){
+    return this.scene;
+}
+
+/**
+ * @returns {THREE.Renderer} renderer - three.js Renderer object
+ */
+App.prototype.getRenderer = function(){
+    return this.renderer;
+}
+
+/**
+ * creates new scene with universe texture
+ * @returns {THREE.Scene} scene - three.js Scene object
+ */
+App.prototype.createScene = function(){
+    var scene = new THREE.Scene();
+    var texture = THREE.ImageUtils.loadTexture('./textures/universe.jpg');
+    scene.background = texture;
+    return scene;
+}
+
+/**
+ * creates new perspective camera
+ * @returns {THREE.Camera} camera - three.js camera object
+ */
+App.prototype.createCamera = function(){
+    var camera = new THREE.PerspectiveCamera( 105, window.innerWidth / window.innerHeight, 1, 5000 );
+    camera.position.set( 70, 70, -70 );
+    camera.lookAt( 0, 0, 0 );
+    return camera;
+}
+
+/**
+ * adds a new object/mesh to a existing created scene
+ * @param {THREE.Mesh} object
+ * @example
+ * addToScene( new THREE.Mesh(new THREE.ShpereGeometry(1,1,1), new THREE.BasicMeshMaterial()))
+ */
+App.prototype.addToScene = function(object) {
+    this.scene.add( object.getMesh() );
+}
+
+/**
+ * adds adds function to animation loop
+ * @param {function} func - Callback function on every loop
+ * @param {Planet} context - context of the Planet class
+ * @todo add an example
+ */
+App.prototype.addToAnimation = function( func, context ) {
+    this.objects.push({ context: context, func: func });
+}
+
+/**
+ * begins the animation
+ */
+App.prototype.draw = function() {
+    var self = this;
+
+    requestAnimationFrame( function(){
+        self.draw();
+    });
+
+    this.objects.forEach(function(obj){
+        obj.context = obj.func(obj.context);
+    });
+
+    this.renderer.render( this.scene, this.camera );
+}
+
+/**
+ * returns camera
+ * @returns {THREE.Camera} camera - three.js camera object
+ */
+App.prototype.getCamera = function(){
+    return this.camera;
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Mar 08 2019 14:29:55 GMT+0530 (India Standard Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

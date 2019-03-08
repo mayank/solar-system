@@ -5,12 +5,16 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "http-server . -g 8000"
+    "build": "http-server . -g 8000",
+    "doc": "jsdoc -d doc --configure .jsdoc.json --verbose *.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "documentation": "^9.3.0",
     "http-server": "^0.11.1",
+    "jsdoc": "^3.5.5",
+    "minami": "^1.2.3",
     "three": "^0.102.1",
     "three.interaction": "^0.2.2"
   }
